@@ -10,7 +10,7 @@ exports.getAllBlogs = async (req, res) => {
 
 // Creating blog
 exports.createBlog = async (req, res) => {
-  await Blog.create(...req.body);
+  await Blog.create({...req.body});
   res.redirect("/");
 };
 
