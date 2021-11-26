@@ -2,21 +2,21 @@ import React from "react";
 
 const MainSectionFooter = () => {
   return (
-    <footer hidden="[count(todo) = 0]" class="footer">
+    <footer hidden="[count(todo) = 0]" className="footer">
       <meta property="todoDone" content="[count(todo where done)]" />
       <meta property="todoLeft" content="[count(todo where !done)]" />
 
       {/* This should be `0 items left` by default */}
-      <span class="todo-count">
+      <span className="todo-count">
         <strong mv-value="todoLeft">0</strong>
         [if(todoLeft = 1, 'item', 'items')] left
       </span>
 
       <meta property="activeFilter" content="all" mv-storage="none" />
-      <ul class="filters">
+      <ul className="filters">
         <li>
           <a
-            class="[if(activeFilter = 'all', 'selected')]"
+            className="[if(activeFilter = 'all', 'selected')]"
             mv-action="set(activeFilter, 'all')"
           >
             All
@@ -24,7 +24,7 @@ const MainSectionFooter = () => {
         </li>
         <li>
           <a
-            class="[if(activeFilter = 'active', 'selected')]"
+            className="[if(activeFilter = 'active', 'selected')]"
             mv-action="set(activeFilter, 'active')"
           >
             Active
@@ -32,7 +32,7 @@ const MainSectionFooter = () => {
         </li>
         <li>
           <a
-            class="[if(activeFilter = 'completed', 'selected')]"
+            className="[if(activeFilter = 'completed', 'selected')]"
             mv-action="set(activeFilter, 'completed')"
           >
             Completed
@@ -42,7 +42,7 @@ const MainSectionFooter = () => {
       {/* Hidden if no completed items are left ↓ */}
       <button
         hidden="[todoDone = 0]"
-        class="clear-completed"
+        className="clear-completed"
         mv-action="delete(todo where done)"
       >
         Clear completed

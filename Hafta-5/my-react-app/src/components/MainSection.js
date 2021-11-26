@@ -1,13 +1,24 @@
-import React from "react";
-import MainSectionFooter from "./MainSectionFooter";
+import React, { useEffect, useState } from "react";
 
 import MainSectionHeader from "./MainSectionHeader";
+import MainSectionFooter from "./MainSectionFooter";
+
+import { todo } from "../data";
 
 const MainSection = () => {
+  const [todoList, setTodoList] = useState([]);
+
+  useEffect(() => {
+    const initializeTodoList = async () => {
+      setTodoList([...todo]);
+    };
+    initializeTodoList();
+  }, []);
+
   return (
     <section
       mv-app="todoapp"
-      class="todoapp"
+      className="todoapp"
       mv-bar="none"
       mv-storage="local"
       mv-autosave="3"
@@ -16,11 +27,14 @@ const MainSection = () => {
     >
       <MainSectionHeader />
       {/* This section should be hidden by default and shown when there are todos */}
-      <section hidden="[count(todo) = 0]" class="main">
+      <section
+        className="main"
+        hidden={todoList.length === 0 ? true : false}
+      >
         <input
           property="toggleAll"
           id="toggle-all"
-          class="toggle-all"
+          className="toggle-all"
           type="checkbox"
           checked="[todoLeft = 0]"
         />
@@ -28,18 +42,20 @@ const MainSection = () => {
           Mark all as complete
         </label>
 
-        <ul class="todo-list">
-          <li
-            mv-multiple="todo"
-            class="[if(done, 'completed')]"
-            hidden="[(done and activeFilter = 'active') or (!done and activeFilter = 'completed')]"
-          >
-            <div class="view">
-              <input property="done" class="toggle" type="checkbox" />
-              <label property="text">Taste JavaScript</label>
-              <button class="destroy" mv-action="delete(todo)"></button>
-            </div>
-          </li>
+        <ul className="todo-list">
+          {todoList.map((element, index) => (
+            <li
+              mv-multiple="todo"
+              className={element.done && "completed"}
+              key={index}
+            >
+              <div className="view">
+                <input property="done" className="toggle" type="checkbox" />
+                <label property="text">{element.text}</label>
+                <button className="destroy" mv-action="delete(todo)"></button>
+              </div>
+            </li>
+          ))}
         </ul>
       </section>
       {/* This footer should hidden by default and shown when there are todos */}
