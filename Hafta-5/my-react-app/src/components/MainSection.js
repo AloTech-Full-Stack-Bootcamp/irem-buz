@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import MainSectionHeader from "./MainSectionHeader";
 import MainSectionFooter from "./MainSectionFooter";
+import Todo from "./Todo";
 
 import { todo } from "../data";
 
@@ -21,6 +22,11 @@ const MainSection = () => {
       done: false,
     };
     setTodoList((todos) => [...todos, newTodo]);
+  };
+
+  const handleDestroy = (text) => {
+    const filteredTodoList = [...todoList].filter((todo) => todo.text !== text);
+    setTodoList(filteredTodoList);
   };
 
   const onChecked = (e) => {
@@ -72,11 +78,7 @@ const MainSection = () => {
               className={element.done ? "completed" : ""}
               key={index}
             >
-              <div className="view">
-                <input property="done" className="toggle" type="checkbox" />
-                <label property="text">{element.text}</label>
-                <button className="destroy" mv-action="delete(todo)"></button>
-              </div>
+              <Todo todo={element} handleDestroy={handleDestroy} />
             </li>
           ))}
         </ul>
