@@ -15,6 +15,31 @@ const MainSection = () => {
     initializeTodoList();
   }, []);
 
+  const handleSubmit = (inputData) => {
+    const newTodo = {
+      text: inputData,
+      done: false,
+    };
+    setTodoList((todos) => [...todos, newTodo]);
+  };
+
+  const onChecked = (e) => {
+    /*
+    let arr = [];
+    todoList.map((e) => !(e.name === "") && arr.push(e));
+    arr.forEach((element) => {
+      if (
+        element.name ===
+        e.target.parentNode.parentNode.parentNode.childNodes["0"].childNodes[1]
+          .innerText
+      ) {
+        element.checked ? (element.checked = false) : (element.checked = true);
+      }
+    });
+    setTodoList(arr);
+    */
+  };
+
   return (
     <section
       mv-app="todoapp"
@@ -25,18 +50,16 @@ const MainSection = () => {
       mv-mode="edit"
       mv-init="#data"
     >
-      <MainSectionHeader />
+      <MainSectionHeader handleSubmit={handleSubmit} />
       {/* This section should be hidden by default and shown when there are todos */}
-      <section
-        className="main"
-        hidden={todoList.length === 0 ? true : false}
-      >
+      <section className="main" hidden={todoList.length === 0 ? true : false}>
         <input
           property="toggleAll"
           id="toggle-all"
           className="toggle-all"
           type="checkbox"
           checked="[todoLeft = 0]"
+          onClick={onChecked}
         />
         <label for="toggle-all" mv-action="set(done, !toggleAll)">
           Mark all as complete
@@ -46,7 +69,7 @@ const MainSection = () => {
           {todoList.map((element, index) => (
             <li
               mv-multiple="todo"
-              className={element.done && "completed"}
+              className={element.done ? "completed" : ""}
               key={index}
             >
               <div className="view">
